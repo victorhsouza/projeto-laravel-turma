@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OsController;
 use App\Http\Controllers\SistemaController;
+use App\Http\Controllers\ClienteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,3 +19,12 @@ use App\Http\Controllers\SistemaController;
 Route::get('/', [SistemaController::class, 'welcome']);
 Route::get('/sobre', [SistemaController::class, 'sobre']);
 Route::get('/servicos', [SistemaController::class, 'servicos']);
+
+
+Route::get('/cliente/cadastrar', [ClienteController::class, 'create']);
+Route::get('/cliente/listar', [ClienteController::class, 'listar']);
+Route::post('/cliente', [ClienteController::class, 'store']);
+
+Route::get('/os/cadastrar', [OsController::class, 'create']);
+Route::get('/os/listar', [OsController::class, 'listar']);
+Route::post('/os', [OsController::class, 'store']);
