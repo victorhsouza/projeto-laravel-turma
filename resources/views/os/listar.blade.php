@@ -13,6 +13,7 @@
                 <th scope="col">Defeito</th>
                 <th scope="col">Solução</th>
                 <th scope="col">Preço</th>
+                <th scope="col">Data</th>
                 <th scope="col" class="text-center" colspan="2">Ações</th>
             </tr>
         </thead>
@@ -25,10 +26,11 @@
                 <td>{{$o->defeito}}</td>
                 <td>{{$o->solucao}}</td>
                 <td>{{$o->preco}}</td>
-                <td><a href="#" class="btn btn-warning
+                <td>{{date('d/m/Y H:m', strtotime($o->created_at, 1))}}</td>
+                <td><a href="/os/{{$o->id}}" class="btn btn-warning
                 "> Alterar</a></td>
                 <td><a href="#" class="btn btn-danger
-                "> Excluir</a></td>
+                "> Finalizar</a></td>
 
             </tr>
             @endforeach

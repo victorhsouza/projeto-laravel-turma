@@ -31,4 +31,15 @@ class OsController extends Controller
 
         return view('os.listar',['os'=>$os]);
     }
+
+    public function edit($id){
+        $os = Os::findOrFail($id);
+
+        return view('os.edit',['os'=>$os]);
+    }
+
+    public function update(Request $request){
+        Os::findOrFail($request->id)->update($request->all());
+        return redirect('/os/listar')->with('msg','OS alterada com sucesso!');
+    }
 }

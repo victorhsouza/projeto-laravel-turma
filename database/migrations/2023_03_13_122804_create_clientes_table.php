@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('endereco',150)->nullable();
             $table->string('email',150)->nullable();
             $table->string('telefone',15)->nullable();
-            $table->string('cpf',11)->nullable();
+            $table->string('cpf',15)->nullable();
             $table->date('datanasc',150)->nullable();
             $table->timestamps();
         });

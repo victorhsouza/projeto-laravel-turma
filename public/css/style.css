@@ -9,6 +9,11 @@
     padding: 10px;
 }
 
+main{
+    width: 90%;
+    margin: 0 auto;
+}
+
 
 /* Estilização tela inicial */
     section.inicio {

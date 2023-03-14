@@ -1,16 +1,17 @@
 @extends('layouts.main')
 
-@section('title', 'Cadastrar cliente')
+@section('title', 'listar Clientes')
 @section('content')
 
 
 <section class="listar-clientes">
-    <table class="table" >
+    <table class="table table-striped" >
         <thead>
             <tr class="text-center">
                 <th scope="col">#</th>
                 <th scope="col">Nome</th>
                 <th scope="col">Endereco</th>
+                <th scope="col">CEP0</th>
                 <th scope="col">CPF</th>
                 <th scope="col">Telefone</th>
                 <th scope="col">Email</th>
@@ -24,14 +25,21 @@
                 <th scope="row">{{$cliente->id}}</th>
                 <td>{{$cliente->nome}}</td>
                 <td>{{$cliente->endereco}}</td>
+                <td>{{$cliente->cep}}</td>
                 <td>{{$cliente->cpf}}</td>
                 <td>{{$cliente->telefone}}</td>
                 <td>{{$cliente->email}}</td>
-                <td>{{$cliente->datanasc}}</td>
-                <td><a href="#" class="btn btn-warning
+                <td>{{date('d/m/y', strtotime($cliente->datanasc))}}</td>
+                <td><a href="/cliente/{{$cliente->id}}" class="btn btn-warning
                 "> Alterar</a></td>
-                <td><a href="#" class="btn btn-danger
-                "> Excluir</a></td>
+                <td>
+                    <form action="/cliente/{{$cliente->id}}" method="post">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir o cliente?')"> Excluir</button>
+                    </form>
+                </td>
+
             </tr>
             @endforeach
         </tbody>

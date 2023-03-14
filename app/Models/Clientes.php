@@ -10,4 +10,8 @@ class Clientes extends Model
     use HasFactory;
 
     protected $dates = ['datanasc'];
+
+    protected $fillable = [];
+
+    protected $guarded = [];
 }
