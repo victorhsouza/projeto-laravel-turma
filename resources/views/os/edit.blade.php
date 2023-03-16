@@ -10,6 +10,16 @@
         @csrf
         @method('PUT')
         <div class="col-md-6">
+            <label for="nome" class="form-label">Cliente</label>
+            <select name="idcliente" class="form-control">
+            <option value="{{$dono->id}}" > {{$dono->nome}} </option>
+                @foreach($clientes as $cliente)
+                <option value="{{$cliente->id}}" > {{$cliente->nome}} </option>
+                @endforeach
+            </select>
+        </div>
+
+        <div class="col-md-6">
             <label for="nome" class="form-label">Marca<span>*</span></label>
             <input type="text" class="form-control" id="nome" name="marca" value="{{$os->marca}}">
         </div>

@@ -11,4 +11,8 @@ class Os extends Model
 
     protected $fillable = [];
     protected $guarded = [];
+
+    public function cliente(){
+        return $this->belongsTo('App\Models\Clientes');
+    }
 }

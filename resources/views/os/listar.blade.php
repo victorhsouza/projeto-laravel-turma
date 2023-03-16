@@ -4,10 +4,19 @@
 @section('content')
 
 <section class="listar-os">
-<table class="table">
+    <form action="" method="get">
+        <label for="search">Numero da OS: </label>
+        <input id="search" type="text" name="search" class="form-control">
+    </form>
+    @if($search)
+    <h3> Pesquisando por: {{$search}} </h3>
+    @endif
+
+    <table class="table">
         <thead>
             <tr class="text-center">
                 <th scope="col">#</th>
+                <th scope="col">Cliente</th>
                 <th scope="col">Marca</th>
                 <th scope="col">Modelo</th>
                 <th scope="col">Defeito</th>
@@ -21,6 +30,7 @@
             @foreach($os as $o)
             <tr class="text-center">
                 <th scope="row">{{$o->id}}</th>
+                <th scope="row">{{$o->nome}}</th>
                 <td>{{$o->marca}}</td>
                 <td>{{$o->modelo}}</td>
                 <td>{{$o->defeito}}</td>
@@ -35,6 +45,12 @@
             </tr>
             @endforeach
         </tbody>
+        @if(count($os) == 0)
+            <section class="nao-encontrado">
+                <h3> Os nao encontrada </h3>
+            </section>
+
+        @endif
     </table>
 
 </section>

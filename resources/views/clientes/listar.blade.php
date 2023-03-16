@@ -5,7 +5,16 @@
 
 
 <section class="listar-clientes">
-    <table class="table table-striped" >
+    <form action="" method="get" >
+        <label for="search">Buscar cliente</label>
+        <input id="search" type="text" name="search" class="form-control">
+    </form>
+
+    @if($search)
+    <p class="mt-2"> Pesquisando por: {{$search}} </p>
+    @endif
+
+    <table class="table table-striped">
         <thead>
             <tr class="text-center">
                 <th scope="col">#</th>
@@ -33,17 +42,27 @@
                 <td><a href="/cliente/{{$cliente->id}}" class="btn btn-warning
                 "> Alterar</a></td>
                 <td>
+                    @can('admin')
                     <form action="/cliente/{{$cliente->id}}" method="post">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir o cliente?')"> Excluir</button>
                     </form>
+                    @endcan
                 </td>
 
             </tr>
             @endforeach
         </tbody>
     </table>
+
+    @if(count($clientes) == 0)
+    <section class="nao-encontrado">
+        <h3> Cliente nao encontrado </h3>
+    </section>
+
+
+    @endif
 </section>
 
 @endsection

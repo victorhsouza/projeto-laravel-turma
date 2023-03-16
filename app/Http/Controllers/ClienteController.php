@@ -30,9 +30,16 @@ class ClienteController extends Controller
     }
 
     public function listar(){
-        $clientes = Clientes::all();
+        $search = request('search');
 
-        return view('clientes.listar',['clientes'=> $clientes]);
+        if($search){
+            $clientes = Clientes::where('nome','like','%'.$search.'%')->get();
+        }else{
+            $clientes = Clientes::all();
+
+        }
+
+        return view('clientes.listar',['clientes'=> $clientes,'search'=>$search]);
     }
 
     public function edit($id){

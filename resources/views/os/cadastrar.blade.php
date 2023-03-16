@@ -2,12 +2,20 @@
 
 @section('title', 'Inicio')
 @section('content')
-
 <section class="cadastrar-os">
 
     <h1> Cadastrar OS </h1>
     <form class="row g-3" action="/os" method="post">
         @csrf
+        <div class="col-md-12">
+            <label for="nome" class="form-label">Cliente</label>
+            <select name="idcliente" class="form-control">
+
+                @foreach($clientes as $cliente)
+                <option value="{{$cliente->id}}" > {{$cliente->nome}} </option>
+                @endforeach
+            </select>
+        </div>
         <div class="col-md-6">
             <label for="nome" class="form-label">Marca<span>*</span></label>
             <input type="text" class="form-control" id="nome" name="marca" required>
@@ -42,6 +50,5 @@
     </form>
 
 </section>
-
 
 @endsection

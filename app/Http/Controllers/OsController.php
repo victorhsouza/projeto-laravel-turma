@@ -3,18 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Clientes;
 use Illuminate\Http\Request;
 use App\Models\Os;
+use Illuminate\Support\Facades\DB;
+
 
 class OsController extends Controller
 {
-    public function create(){
-        return view('os.cadastrar');
+    public function create()
+    {
+        $clientes = Clientes::all();
+
+        return view('os.cadastrar', ['clientes' => $clientes]);
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         $os = new Os();
-
+        $os->idcliente = $request->idcliente;
         $os->marca = $request->marca;
         $os->modelo = $request->modelo;
         $os->defeito = $request->defeito;
@@ -23,23 +30,48 @@ class OsController extends Controller
 
         $os->save();
 
-        return redirect('/')->with('msg','OS criada com sucesso!');
+        return redirect('/os/listar')->with('msg', 'OS criada com sucesso!');
     }
 
-    public function listar(){
-        $os = Os::all();
+    public function listar()
+    {
+        // $os = Os::all();
+        $search = request('search');
 
-        return view('os.listar',['os'=>$os]);
+        if ($search) {
+            $lista = DB::table('os')
+                ->join('clientes', 'clientes.id', '=', 'os.idcliente')
+                ->where('os.id','like','%'.$search.'%')
+                ->orWhere('clientes.nome','like','%'.$search.'%')
+                ->select('os.*', 'clientes.nome')
+                ->get();
+        } else {
+            $lista = DB::table('os')
+                ->join('clientes', 'clientes.id', '=', 'os.idcliente')
+                ->select('os.*', 'clientes.nome')
+                ->get();
+        }
+
+        return view('os.listar', ['os' => $lista, 'search'=> $search]);
     }
 
-    public function edit($id){
-        $os = Os::findOrFail($id);
+    public function edit($id)
+    {
+        try {
+            $os = Os::findOrFail($id);
+            $clientes = Clientes::all();
 
-        return view('os.edit',['os'=>$os]);
+            $dono = Clientes::where('id', '=', $os->idcliente)->first();
+
+            return view('os.edit', ['os' => $os, 'clientes' => $clientes, 'dono' => $dono]);
+        } catch (\Throwable $th) {
+            abort('403', 'Deu erro na solicitação');
+        }
     }
 
-    public function update(Request $request){
+    public function update(Request $request)
+    {
         Os::findOrFail($request->id)->update($request->all());
-        return redirect('/os/listar')->with('msg','OS alterada com sucesso!');
+        return redirect('/os/listar')->with('msg', 'OS alterada com sucesso!');
     }
 }

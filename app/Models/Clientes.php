@@ -14,4 +14,8 @@ class Clientes extends Model
     protected $fillable = [];
 
     protected $guarded = [];
+
+    public function osCliente(){
+        return $this->hasMany('App\Models\Os');
+    }
 }

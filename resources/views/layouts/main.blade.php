@@ -24,7 +24,8 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 nav-edit">
+                        @guest
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="/">Inicio</a>
                         </li>
@@ -33,6 +34,18 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/servicos">Serviços</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/login">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/register">Cadastrar</a>
+                        </li>
+                        @endguest
+
+                        @auth
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/dashboard">Inicio</a>
                         </li>
 
                         <li class="nav-item dropdown">
@@ -51,10 +64,30 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="/os/listar">Listar OS</a></li>
+
                                 <li><a class="dropdown-item" href="/os/cadastrar">Cadastrar OS</a></li>
+
                             </ul>
                         </li>
 
+                        @can('admin')
+                        <li class="nav-item me-auto">
+                            <a class="nav-link" href="/register">Cadastrar usuario</a>
+                        </li>
+                        @endcan
+
+                        <form action="/logout" method="post" class="my-auto">
+                            @csrf
+                            <ul class="navbar-nav me-auto mb-2 mb-lg-0" >
+                                <li class="nav-item me-auto">
+                                    <a class="nav-link" href="/logout" onclick="event.preventDefault(); this.closest('form').submit();">Logout</a>
+                                </li>
+
+                            </ul>
+                        </form>
+
+
+                        @endauth
 
                     </ul>
 
@@ -64,6 +97,9 @@
     </header>
 
     <main>
+    @auth
+        <p>Usuario: {{auth()->user()->name}}</p>
+    @endauth
 
         @if(session('msg'))
         <p class="msg"> {{session('msg')}} </p>
@@ -71,7 +107,7 @@
         @yield('content')
     </main>
 
-    <footer >
+    <footer>
         <p> &copy; VitechDev</p>
     </footer>
 
